@@ -2,7 +2,8 @@ import { update } from 'novux';
 import { ENDPOINTS } from '../constants';
 import { get } from './api';
 
-export const getUsers = ({ endpoint } = {}) => (dispatch) => {
+export const getUsers = () => (dispatch) => {
+	const endpoint = ENDPOINTS.getUsers;
 	get({ endpoint, dispatch })
 		.then((body) => {
 			dispatch(update('cache', 'Cache response body', {
@@ -11,7 +12,8 @@ export const getUsers = ({ endpoint } = {}) => (dispatch) => {
 		});
 };
 
-export const addUser = ({ endpoint = ENDPOINTS.createUser } = {}) => (dispatch, getState) => {
+export const addUser = () => (dispatch, getState) => {
+	const endpoint = ENDPOINTS.createUser;
 	get({ endpoint, dispatch })
 		.then((body) => {
 			const { users } = getState().cache;

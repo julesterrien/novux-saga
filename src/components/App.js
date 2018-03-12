@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func, bool } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import { getUsers, addUser } from '../actions';
-import { ENDPOINTS } from '../constants';
 import Loader from './Loader';
 import Users from './Users';
 
@@ -13,7 +12,10 @@ class App extends Component {
 		this.props.onMount();
 	}
 	render() {
-		const { onClick, isFetching } = this.props;
+		const { onClick, isFetching, error } = this.props;
+
+		if (error) return <div>{error}</div>;
+
 		return (
 			<div className="app">
 				<button onClick={onClick}>Add user</button>
@@ -33,20 +35,23 @@ App.propTypes = {
 	onMount: func.isRequired,
 	onClick: func.isRequired,
 	isFetching: bool.isRequired,
+	error: string,
 };
 
 App.defaultProps = {
 	isFetching: false,
+	error: '',
 };
 
 const mapState = state => ({
 	isFetching: state.app.isFetching || false,
+	error: state.app.error,
 });
 
 const mapDispatch = dispatch => ({
 	dispatch,
 	onMount() {
-		dispatch(getUsers({ endpoint: ENDPOINTS.getUsers }));
+		dispatch(getUsers());
 	},
 });
 

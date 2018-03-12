@@ -1,7 +1,7 @@
 import { update } from 'novux';
 import { baseUrl } from '../constants';
 
-export const get = ({ endpoint, dispatch }) => {
+export const get = ({ endpoint, dispatch } = {}) => {
 	dispatch(update('app', 'Turn on isFetching', { isFetching: true }));
 
 	return fetch(`${baseUrl}/${endpoint}`, { method: 'GET' })
