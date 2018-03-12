@@ -46,7 +46,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
 	dispatch,
 	onMount() {
-		dispatch(getUsers({ endpoint: ENDPOINTS.users }));
+		dispatch(getUsers({ endpoint: ENDPOINTS.getUsers }));
 	},
 });
 
