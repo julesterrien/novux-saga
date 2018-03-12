@@ -1,6 +1,8 @@
 import { update } from 'novux';
 import { chain } from 'redux-chain';
-import { baseUrl, getEndpoint } from '../constants/api';
+import { baseUrl, ENDPOINTS } from '../constants/api';
+
+const getEndpoint = endpoint => ENDPOINTS[endpoint] || '';
 
 export const getData = ({ endpoint }) => (dispatch) => {
 	dispatch(update('app', 'Turn on isFetching', { isFetching: true }));
