@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func } from 'prop-types';
-import genghis from '../assets/genghis.png';
+import { update } from 'novux';
+import { func, bool } from 'prop-types';
 import { getData } from '../actions';
+import Loader from './Loader';
+import Users from './Users';
+import { createSampleUser } from '../modules/utils';
 
 import './App.css';
 
@@ -11,11 +14,17 @@ class App extends Component {
 		this.props.onMount();
 	}
 	render() {
+		const { onClick, isFetching } = this.props;
 		return (
 			<div className="app">
-				<h5>Hi there :)</h5>
-				<br />
-				<img src={genghis} alt="Genghis" />
+				<button onClick={onClick}>Add user</button>
+				{
+					isFetching ? (
+						<Loader />
+					) : (
+						<Users />
+					)
+				}
 			</div>
 		);
 	}
@@ -23,12 +32,36 @@ class App extends Component {
 
 App.propTypes = {
 	onMount: func.isRequired,
+	onClick: func.isRequired,
+	isFetching: bool.isRequired,
 };
 
+App.defaultProps = {
+	isFetching: false,
+};
+
+const mapState = state => ({
+	isFetching: state.app.isFetching || false,
+	users: state.cache.users,
+});
+
 const mapDispatch = dispatch => ({
+	dispatch,
 	onMount() {
-		dispatch(getData());
+		dispatch(getData({ endpoint: 'users' }));
 	},
 });
 
-export default connect(null, mapDispatch)(App);
+const mergeProps = ({ isFetching, users }, { dispatch, onMount }) => ({
+	isFetching,
+	onMount,
+	onClick() {
+		if (!isFetching) {
+			dispatch(update('cache', 'Add a user', {
+				users: [...users, createSampleUser()],
+			}));
+		}
+	},
+});
+
+export default connect(mapState, mapDispatch, mergeProps)(App);

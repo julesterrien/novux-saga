@@ -9,10 +9,19 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use((req, res) => {
-	return res.status(200).json({
-		success: 'Hello world',
-	});
+app.get('/users', (req, res) => {
+	return res.status(200).json([
+		{
+			username: 'bob',
+			id: Math.random(),
+		},
+		{
+			username: 'jane',
+			id: Math.random(),
+		},
+	]);
 });
+
+app.use((req, res) => res.status(200).json({ success: 'Hello world' }));
 
 export default app;

@@ -1,14 +1,23 @@
-// import { update } from 'novux';
-// import { chain } from 'redux-chain';
+import { update } from 'novux';
+import { chain } from 'redux-chain';
+import { baseUrl, getEndpoint } from '../constants/api';
 
-const baseUrl = `http://${window.location.hostname || 'localhost'}:8000`;
+export const getData = ({ endpoint }) => (dispatch) => {
+	dispatch(update('app', 'Turn on isFetching', { isFetching: true }));
 
-export const getData = () => (dispatch) => {
-	fetch(`${baseUrl}`, {
-		method: 'GET',
-	})
+	const url = `${baseUrl}/${getEndpoint(endpoint)}`;
+
+	// slow down request for test purposes
+	fetch(url, { method: 'GET' })
 		.then(res => res.json())
 		.then((body) => {
-			console.log('Response body:', body);
+			dispatch(
+				chain(
+					update('app', 'Turn off isFetching', { isFetching: false }),
+					update('cache', 'Save response body', {
+						[endpoint]: body,
+					})
+				),
+			);
 		});
 };
