@@ -1,4 +1,5 @@
 import express from 'express';
+import { randomUsername } from './utils';
 
 const app = express();
 
@@ -9,17 +10,30 @@ app.use((req, res, next) => {
 	next();
 });
 
+const SIMULATE_LATENCY_TIMEOUT = 400;
+
 app.get('/users', (req, res) => {
-	return res.status(200).json([
-		{
-			username: 'bob',
+	setTimeout(() => {
+		return res.status(200).json([
+			{
+				username: 'bob',
+				id: Math.random(),
+			},
+			{
+				username: 'jane',
+				id: Math.random(),
+			},
+		]);
+	}, SIMULATE_LATENCY_TIMEOUT);
+});
+
+app.get('/users/new', (req, res) => {
+	setTimeout(() => {
+		return res.status(200).json({
+			username: randomUsername(),
 			id: Math.random(),
-		},
-		{
-			username: 'jane',
-			id: Math.random(),
-		},
-	]);
+		});
+	}, SIMULATE_LATENCY_TIMEOUT);
 });
 
 app.use((req, res) => res.status(200).json({ success: 'Hello world' }));

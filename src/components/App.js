@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { update } from 'novux';
 import { func, bool } from 'prop-types';
-import { getData } from '../actions';
+import { getUsers, addUser } from '../actions';
 import Loader from './Loader';
 import Users from './Users';
-import { createSampleUser } from '../modules/utils';
 
 import './App.css';
 
@@ -42,24 +40,21 @@ App.defaultProps = {
 
 const mapState = state => ({
 	isFetching: state.app.isFetching || false,
-	users: state.cache.users,
 });
 
 const mapDispatch = dispatch => ({
 	dispatch,
 	onMount() {
-		dispatch(getData({ endpoint: 'users' }));
+		dispatch(getUsers({ endpoint: 'users' }));
 	},
 });
 
-const mergeProps = ({ isFetching, users }, { dispatch, onMount }) => ({
+const mergeProps = ({ isFetching }, { dispatch, onMount }) => ({
 	isFetching,
 	onMount,
 	onClick() {
 		if (!isFetching) {
-			dispatch(update('cache', 'Add a user', {
-				users: [...users, createSampleUser()],
-			}));
+			dispatch(addUser());
 		}
 	},
 });
