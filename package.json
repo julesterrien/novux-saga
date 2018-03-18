@@ -13,7 +13,10 @@
     "start:client": "node scripts/start.js",
     "start:server": "nodemon -r @std/esm ./api/index.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
+    "test": "echo \"Please use npm run test:novux or npm run test:saga\" && exit 1",
+    "test:novux": "REACT_APP_NOVUX=true npm run test:run",
+    "test:saga": "REACT_APP_SAGA=true npm run test:run",
+    "test:run": "node scripts/test.js --env=jsdom",
     "lint": "node_modules/.bin/eslint . --ext .jsx --ext .js --max-warnings=0"
   },
   "dependencies": {
