@@ -72,6 +72,7 @@ choosePort(HOST, DEFAULT_PORT)
 				clearConsole();
 			}
 			console.log(chalk.cyan('Starting the development server...\n'));
+			console.log(chalk.green(`Using ${(process.env.REACT_APP_NOVUX && 'novux') || (process.env.REACT_APP_SAGA && 'saga')} config`));
 			openBrowser(urls.localUrlForBrowser);
 		});
 
