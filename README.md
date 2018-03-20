@@ -27,7 +27,7 @@ $ npm run test:saga
 ```
 
 ```bash
-# run the frontend using novux
+# run tests using novux
 $ npm run test:novux
 ```
 
@@ -43,6 +43,6 @@ I tried to keep the /src-saga organized as closely as how we do it in our repos.
 ## Insights
 To count the number of lines from /src or /src-saga, run `find . -name '*.js' | xargs wc -l`
 
-Redux-saga is 60% more verbose:
+Redux-saga is ~60% more verbose as it requires code for reducers, actionCreators/actions, sagas (+ all related tests):
 - 446 lines of code using saga
 - 272 lines of code using thunk/novux
