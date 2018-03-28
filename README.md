@@ -46,3 +46,25 @@ To count the number of lines from /src or /src-saga, run `find . -name '*.js' | 
 Redux-saga is ~60% more verbose as it requires code for reducers, actionCreators/actions, sagas (+ all related tests):
 - 446 lines of code using saga
 - 272 lines of code using thunk/novux
+
+## Frontend saga audit
+**IMPORTED FROM redux-saga**
+delay: 15
+END: 1
+eventChannel: 1
+
+**IMPORTED FROM redux-saga/effects**
+put: 58
+call: 49
+takeLatest: 37
+select: 28
+take: 20
+takeEvery: 15
+fork: 4
+cancel: 3
+race: 3
+cancelled: 1
+throttle: 1
+
+
+
